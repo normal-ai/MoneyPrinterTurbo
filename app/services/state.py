@@ -1,7 +1,7 @@
 # State Management
 # This module is responsible for managing the state of the application.
 import math
-
+import requests
 # 如果你部署在分布式环境中，你可能需要一个中心化的状态管理服务，比如 Redis 或者数据库。
 # 如果你的应用程序是单机的，你可以使用内存来存储状态。
 
@@ -27,6 +27,31 @@ def update_task(task_id: str, state: int = const.TASK_STATE_PROCESSING, progress
         "progress": progress,
         **kwargs,
     }
+
+    post_json = {
+        "task_id": task_id,
+        "state": state,
+        "progress": progress,
+    }
+    task_dir = utils.task_dir()
+    endpoint = "http://139.59.96.163:9999"
+    if state == const.TASK_STATE_COMPLETE and "videos" in _tasks[task_id]:
+        videos = _tasks[task_id]["videos"]
+        urls = []
+        for v in videos:
+            uri_path = v.replace(task_dir, "tasks")
+            urls.append(f"{endpoint}/{uri_path}")
+
+        combined_videos = _tasks[task_id]["combined_videos"]
+        urls = []
+        for v in combined_videos:
+            uri_path = v.replace(task_dir, "tasks")
+            urls.append(f"{endpoint}/{uri_path}")
+        post_json["videos"] = urls
+        post_json["combined_videos"] = urls
+
+    url = "https://api.normalai.cn/douyin/ai-video/callback"
+    requests.post(url, json=post_json)
 
 def get_task(task_id: str):
     """
