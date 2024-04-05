@@ -34,24 +34,26 @@ def update_task(task_id: str, state: int = const.TASK_STATE_PROCESSING, progress
         "progress": progress,
     }
     task_dir = utils.task_dir()
-    endpoint = "http://139.59.96.163:9999"
+    endpoint = "https://video.normalai.cn"
     if state == const.TASK_STATE_COMPLETE and "videos" in _tasks[task_id]:
         videos = _tasks[task_id]["videos"]
         urls = []
         for v in videos:
             uri_path = v.replace(task_dir, "tasks")
             urls.append(f"{endpoint}/{uri_path}")
+        post_json["videos"] = urls
 
         combined_videos = _tasks[task_id]["combined_videos"]
-        urls = []
+        combined_urls = []
         for v in combined_videos:
             uri_path = v.replace(task_dir, "tasks")
-            urls.append(f"{endpoint}/{uri_path}")
-        post_json["videos"] = urls
-        post_json["combined_videos"] = urls
+            combined_urls.append(f"{endpoint}/{uri_path}")
+
+        post_json["combined_videos"] = combined_urls
 
     url = "https://api.normalai.cn/douyin/ai-video/callback"
     requests.post(url, json=post_json)
+
 
 def get_task(task_id: str):
     """
