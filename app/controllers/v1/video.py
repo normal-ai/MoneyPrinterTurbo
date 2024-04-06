@@ -71,15 +71,21 @@ def get_task(request: Request, task_id: str = Path(..., description="Task ID"),
 
 @router.get("/musics", response_model=BgmRetrieveResponse, summary="Retrieve local BGM files")
 def get_bgm_list(request: Request):
+    endpoint = config.app.get("endpoint", "")
+    if not endpoint:
+        endpoint = str(request.base_url)
+    endpoint = endpoint.rstrip("/")
     suffix = "*.mp3"
     song_dir = utils.song_dir()
     files = glob.glob(os.path.join(song_dir, suffix))
     bgm_list = []
     for file in files:
+        filename = os.path.basename(file)
         bgm_list.append({
-            "name": os.path.basename(file),
+            "name": filename,
             "size": os.path.getsize(file),
             "file": file,
+            "url": f"{endpoint}/songs/{filename}"
         })
     response = {
         "files": bgm_list
