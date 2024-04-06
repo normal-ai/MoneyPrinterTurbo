@@ -19,6 +19,12 @@
     #   gemini
     llm_provider="openai"
 
+    ########## Ollama Settings
+    # No need to set it unless you want to use your own proxy
+    ollama_base_url = ""
+    # Check your available models at https://ollama.com/library
+    ollama_model_name = ""
+
     ########## OpenAI API Key
     # Get your API key at https://platform.openai.com/api-keys
     openai_api_key = ""
@@ -109,6 +115,19 @@
     # For example, https://xxxx.com/tasks/6357f542-a4e1-46a1-b4c9-bf3bd0df5285/final-1.mp4
     # endpoint="https://xxxx.com"
     endpoint=""
+
+
+    # Video material storage location
+    # material_directory = ""                    # Indicates that video materials will be downloaded to the default folder, the default folder is ./storage/cache_videos under the current project
+    # material_directory = "/user/harry/videos"  # Indicates that video materials will be downloaded to a specified folder
+    # material_directory = "task"                # Indicates that video materials will be downloaded to the current task's folder, this method does not allow sharing of already downloaded video materials
+
+    # 视频素材存放位置
+    # material_directory = ""                    #表示将视频素材下载到默认的文件夹，默认文件夹为当前项目下的 ./storage/cache_videos
+    # material_directory = "/user/harry/videos"  #表示将视频素材下载到指定的文件夹中
+    # material_directory = "task"                #表示将视频素材下载到当前任务的文件夹中，这种方式无法共享已经下载的视频素材
+
+    material_directory = ""
 
 
 [whisper]
