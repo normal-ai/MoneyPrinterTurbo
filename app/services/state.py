@@ -51,9 +51,11 @@ def update_task(task_id: str, state: int = const.TASK_STATE_PROCESSING, progress
 
         post_json["combined_videos"] = combined_urls
 
-    url = "https://api.normalai.cn/douyin/ai-video/callback"
-    requests.post(url, json=post_json)
-
+    try:
+        url = "https://api.normalai.cn/douyin/ai-video/callback"
+        requests.post(url, json=post_json)
+    except requests.exceptions.RequestException as e:
+        print(f"请求出错： {e}")
 
 def get_task(task_id: str):
     """
