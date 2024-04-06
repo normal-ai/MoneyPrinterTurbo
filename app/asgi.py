@@ -53,6 +53,9 @@ app.mount("/tasks", StaticFiles(directory=task_dir, html=True, follow_symlink=Tr
 public_dir = utils.public_dir()
 app.mount("/", StaticFiles(directory=public_dir, html=True), name="")
 
+song_dir = utils.song_dir()
+app.mount("/songs", StaticFiles(directory=song_dir, html=True, follow_symlink=True), name="")
+
 
 @app.on_event("shutdown")
 def shutdown_event():
