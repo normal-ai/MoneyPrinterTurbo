@@ -73,7 +73,7 @@ class MaterialInfo:
 # ]
 
 
-class VideoParams:
+class VideoParams(BaseModel):
     """
     {
       "video_subject": "",
@@ -187,6 +187,26 @@ class TaskResponse(BaseResponse):
 
 
 class TaskQueryResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "state": 1,
+                    "progress": 100,
+                    "videos": [
+                        "http://127.0.0.1:8080/tasks/6c85c8cc-a77a-42b9-bc30-947815aa0558/final-1.mp4"
+                    ],
+                    "combined_videos": [
+                        "http://127.0.0.1:8080/tasks/6c85c8cc-a77a-42b9-bc30-947815aa0558/combined-1.mp4"
+                    ]
+                }
+            },
+        }
+
+
+class TaskDeletionResponse(BaseResponse):
     class Config:
         json_schema_extra = {
             "example": {

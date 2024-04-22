@@ -10,9 +10,9 @@
 
 <h3>English | <a href="README.md">简体中文</a></h3>
 
-
-> Thanks to [RootFTW](https://github.com/Root-FTW) for the translation
-
+<div align="center">
+  <a href="https://trendshift.io/repositories/8731" target="_blank"><img src="https://trendshift.io/api/badge/repositories/8731" alt="harry0703%2FMoneyPrinterTurbo | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+</div>
 
 Simply provide a <b>topic</b> or <b>keyword</b> for a video, and it will automatically generate the video copy, video
 materials, video subtitles, and video background music before synthesizing a high-definition short video.
@@ -58,6 +58,8 @@ https://reccloud.com
 - [x] Video material sources are **high-definition** and **royalty-free**
 - [x] Supports integration with various models such as **OpenAI**, **moonshot**, **Azure**, **gpt4free**, **one-api**,
   **qianwen**, **Google Gemini**, **Ollama** and more
+
+❓[How to Use the Free OpenAI GPT-3.5 Model?](https://github.com/harry0703/MoneyPrinterTurbo/blob/main/README-en.md#common-questions-)
 
 ### Future Plans 📅
 
@@ -257,6 +259,24 @@ own fonts.
 
 ## Common Questions 🤔
 
+### ❓How to Use the Free OpenAI GPT-3.5 Model?
+
+[OpenAI has announced that ChatGPT with 3.5 is now free](https://openai.com/blog/start-using-chatgpt-instantly), and
+developers have wrapped it into an API for direct usage.
+
+**Ensure you have Docker installed and running**. Execute the following command to start the Docker service:
+
+```shell
+docker run -p 3040:3040 missuo/freegpt35
+```
+
+Once successfully started, modify the `config.toml` configuration as follows:
+
+- Set `llm_provider` to `openai`
+- Fill in `openai_api_key` with any value, for example, '123456'
+- Change `openai_base_url` to `http://localhost:3040/v1/`
+- Set `openai_model_name` to `gpt-3.5-turbo`
+
 ### ❓RuntimeError: No ffmpeg exe could be found
 
 Normally, ffmpeg will be automatically downloaded and detected.
@@ -299,7 +319,7 @@ This is likely due to network issues preventing access to foreign services. Plea
 [issue 33](https://github.com/harry0703/MoneyPrinterTurbo/issues/33)
 
 1. Follow the `example configuration` provided `download address` to
-   install https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-29-Q16-x64-static.exe, using the static library
+   install https://imagemagick.org/archive/binaries/ImageMagick-7.1.1-30-Q16-x64-static.exe, using the static library
 2. Do not install in a path with Chinese characters to avoid unpredictable issues
 
 [issue 54](https://github.com/harry0703/MoneyPrinterTurbo/issues/54#issuecomment-2017842022)

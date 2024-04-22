@@ -1,3 +1,6 @@
+listen_host = "127.0.0.1"
+listen_port = 8502
+
 [app]
     # Pexels API Key
     # Register at https://www.pexels.com/api/ to get your API key.
@@ -129,6 +132,15 @@
 
     material_directory = ""
 
+    # Used for state management of the task
+    enable_redis = false
+    redis_host = "localhost"
+    redis_port = 6379
+    redis_db = 0
+    redis_password = ""
+
+    # 文生视频时的最大并发任务数
+    max_concurrent_tasks = 5
 
 [whisper]
     # Only effective when subtitle_provider is "whisper"
@@ -157,3 +169,9 @@
         ### Doc: https://requests.readthedocs.io/en/latest/user/advanced/#proxies
         # http = "http://10.10.1.10:3128"
         # https = "http://10.10.1.10:1080"
+
+[azure]
+    # Azure Speech API Key
+    # Get your API key at https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices
+    speech_key=""
+    speech_region=""

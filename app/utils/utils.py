@@ -1,3 +1,4 @@
+import locale
 import os
 import platform
 import threading
@@ -162,15 +163,59 @@ def str_contains_punctuation(word):
 def split_string_by_punctuations(s):
     result = []
     txt = ""
-    for char in s:
+
+    previous_char = ""
+    next_char = ""
+    for i in range(len(s)):
+        char = s[i]
+        if char == "\n":
+            result.append(txt.strip())
+            txt = ""
+            continue
+
+        if i > 0:
+            previous_char = s[i - 1]
+        if i < len(s) - 1:
+            next_char = s[i + 1]
+
+        if char == "." and previous_char.isdigit() and next_char.isdigit():
+            # 取现1万，按2.5%收取手续费, 2.5 中的 . 不能作为换行标记
+            txt += char
+            continue
+
         if char not in const.PUNCTUATIONS:
             txt += char
         else:
             result.append(txt.strip())
             txt = ""
+    result.append(txt.strip())
+    # filter empty string
+    result = list(filter(None, result))
     return result
 
 
 def md5(text):
     import hashlib
     return hashlib.md5(text.encode('utf-8')).hexdigest()
+
+
+def get_system_locale():
+    try:
+        loc = locale.getdefaultlocale()
+        # zh_CN, zh_TW return zh
+        # en_US, en_GB return en
+        language_code = loc[0].split("_")[0]
+        return language_code
+    except Exception as e:
+        return "en"
+
+
+def load_locales(i18n_dir):
+    _locales = {}
+    for root, dirs, files in os.walk(i18n_dir):
+        for file in files:
+            if file.endswith(".json"):
+                lang = file.split(".")[0]
+                with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                    _locales[lang] = json.loads(f.read())
+    return _locales
